@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--     First attempt. It's kinda dark and text is a little hard to read -->
+<!--     <color name="lightBlueBackground">#2085ff</color> -->
+<!-- 	 Attempt #2 a little too light, but this is what production might be. -->
+    <color name="lightBlueBackground">#38a9ff</color>
+<!--     Reverted back to the lighter background. Users recommened. -->
+<!-- 	<color name="lightBlueBackground">#388bff</color> -->
+    <color name="defaultTextColor">#000</color>
+    <color name="lightTextColor">#2085ff</color>
+    <color name="hintTextColor">#444</color>
+    
+</resources>

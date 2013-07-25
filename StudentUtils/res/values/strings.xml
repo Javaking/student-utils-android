@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Student Utilities</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_courses">Courses </string>
+    <string name="menu_addCourse">Add Course</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_deleteCourse">Remove Course</string>
+    <string name="menu_delete">Delete</string>
+    <string name="courseTitle">Course Title:</string>
+    <string name="teacher">Teacher:</string>
+    <string name="room">Room:</string>
+    <string name="courseTimes">Course Times:</string>
+    <string name="noTimes">You don\'t have any times. Click \"add\" to add one.</string>
+    <string name="noItems">You don\'t have any items. Click \"add\" to add one.</string>
+    <string name="noTimes_cantadd">There are no times associated with this class.</string>
+    <string name="noCourses">You don\'t have any courses currently. Click the add button to add a course</string>
+    <string name="enableAds">Enable Ads</string>
+    <string-array name="testDevices">
+        <item >TEST_EMULATOR</item>
+        <item >DE71FB9BA74B5C149589555AF8FC4B8F</item>
+    </string-array>
+    <string name="admob_id">a150a7d955439fc</string>
+    <string name="adSummary">Ads are the only way I make money from this app, please keep them on.</string>
+    <string name="done">Done</string>
+    <string name="college">College Timing</string>
+    <string name="startTime">Start Time:</string>
+    <string name="endTime">End Time:</string>
+    <string name="period">Period:</string>
+    <string name="s">S</string>
+    <string name="m">M</string>
+    <string name="t">T</string>
+    <string name="w">W</string>
+    <string name="f">F</string>
+    <string name="r">R</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="addCourse">Add Course</string>
+    <string name="general">General</string>
+    <string name="calendars">Calendars</string>
+    <string name="choose_calendar">Choose Calendar</string>
+    <string name="calendarSelectMessage">Which calendar do you want to add events to?</string>
+    <string name="addToCal">Add Courses To Calendar</string>
+    <string name="addToCalTrue">Will automatically add all your courses to your calendar.</string>
+    <string name="addToCalFalse">Won\'t add your courses to the calendar</string>
+
+</resources>
