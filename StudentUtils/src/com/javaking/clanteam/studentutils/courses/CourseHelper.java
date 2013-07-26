@@ -703,6 +703,7 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String COLUMN_TEACHER = "teacher";
     public static final String COLUMN_ROOM = "room";
     public static final String COLUMN_TIMES = "times";
+    public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_ASSIGNMENT_IDS = "assignments";
 
     protected static final String COURSE_TABLE_CREATE = "CREATE TABLE "
@@ -712,7 +713,8 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
             + COLUMN_TEACHER + " TEXT,"
             + COLUMN_ROOM + " TEXT,"
             + COLUMN_TIMES + " TEXT,"
-            + COLUMN_ASSIGNMENT_IDS + " TEXT);";
+            + COLUMN_ASSIGNMENT_IDS + " TEXT"
+            + COLUMN_NOTES + " TEXT);";
 
     private Context mContext;
 
@@ -779,5 +781,9 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
         // TODO make this better..
 
         db.execSQL("DROP TABLE IF EXISTS ?", new Object[] {COURSE_TABLE_NAME});
+    }
+
+    public void addCourse(CourseData courseData) {
+
     }
 }

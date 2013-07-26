@@ -3,6 +3,8 @@ package com.javaking.clanteam.studentutils.courses;
 import android.annotation.SuppressLint;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -114,6 +116,30 @@ public class CourseData {
                 return buffer.toString();
             }
 
+            /**
+             * Functions much like the parse function of DateFormat, but uses the pattern
+             * @param string
+             * @return
+             */
+            public DatePair parse(String string) throws ParseException {
+                DatePair pair = new DatePair();
+                String[] dateStrings = string.split(mInterlude);
+                pair.setFormat(this);
+                pair.setStartDate(mFirstFormat.parse(dateStrings[0]));
+
+                boolean startLeniet = mSecondFormat.isLenient();
+                mSecondFormat.setLenient(false);
+                ParsePosition position = new ParsePosition(0);
+                Date temp = mSecondFormat.parse(dateStrings[1],position);
+                if (temp == null) {
+                    // the error index should be the first character that's part of the
+                    // end format so just back it up by 1 and continue.
+                    temp = mSecondFormat.parse(dateStrings[1].substring(0, position.getErrorIndex()-1));
+                }
+                mSecondFormat.setLenient(startLeniet); // restore original leniency.
+                pair.setEndDate(temp);
+                return pair;
+            }
     }
 
         private Date mStart;
@@ -168,6 +194,7 @@ public class CourseData {
 
         @Override
         public String toString() {
+            new SimpleDateFormat().parse("",null);
             return mFormat.format(this);
 
         }
@@ -175,6 +202,43 @@ public class CourseData {
 
     }
 
+
+    // TODO Do i want to expose this?
+    public int getID() {
+        return mID;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
+    }
+
+    public String getTeacher() {
+        return mTeacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.mTeacher = teacher;
+    }
+
+    public String getRoom() {
+        return mRoom;
+    }
+
+    public void setRoom(String room) {
+        this.mRoom = room;
+    }
+
+    public DatePair[] getTimes() {
+        return mTimes;
+    }
+
+    public void setTimes(DatePair[] times) {
+        this.mTimes = times;
+    }
 
     private int mID;
     private String mTitle;
