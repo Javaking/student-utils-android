@@ -43,5 +43,6 @@
     <string name="addToCal">Add Courses To Calendar</string>
     <string name="addToCalTrue">Will automatically add all your courses to your calendar.</string>
     <string name="addToCalFalse">Won\'t add your courses to the calendar</string>
+    <string name="noCourseText">There are no saved courses. Please click the \"Add Course\" button to add one.</string>
 
 </resources>

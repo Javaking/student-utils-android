@@ -675,23 +675,109 @@
  * <http://www.gnu.org/philosophy/why-not-lgpl.html>.
  */
 
-package com.javaking.clanteam.studentutils;
+package com.javaking.clanteam.studentutils.courses;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.actionbarsherlock.app.SherlockListFragment;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by Scott on 7/25/13.
  */
-public class CourseListFragment extends SherlockListFragment {
+public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
 
+    private static CourseHelper instance;
+
+    public static final String TAG = "CourseHelper";
+
+    // Database info
+    public static final int DATABASE_VERSION = 2;
+    public static final String DATABASE_NAME = "course.db";
+
+    // Course table info
+    public static final String COURSE_TABLE_NAME = "courses";
+    public static final String COLUMN_ID = _ID;
+    public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_TEACHER = "teacher";
+    public static final String COLUMN_ROOM = "room";
+    public static final String COLUMN_TIMES = "times";
+    public static final String COLUMN_ASSIGNMENT_IDS = "assignments";
+
+    protected static final String COURSE_TABLE_CREATE = "CREATE TABLE "
+            + COURSE_TABLE_NAME + " ("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_TITLE + " TEXT NOT NULL,"
+            + COLUMN_TEACHER + " TEXT,"
+            + COLUMN_ROOM + " TEXT,"
+            + COLUMN_TIMES + " TEXT,"
+            + COLUMN_ASSIGNMENT_IDS + " TEXT);";
+
+    private Context mContext;
+
+    public static void initialize(Context context) {
+        instance = new CourseHelper(context);
+    }
+
+
+    /**
+     * Returns the instance of CourseHelper if it has been initialized
+     * @return The instance of CourseHelper
+     * @throws InstantiationException If you attempt to get the instance before
+     *          the helper has been initialized
+     */
+    public static CourseHelper getInstance() throws InstantiationException {
+        if (instance==null) {
+            // hasn't been initialized yet
+            throw new InstantiationException("CourseHelper has not yet been initialized");
+        }
+        return instance;
+    }
+
+    private CourseHelper(Context context)
+    {
+        super(context, DATABASE_NAME,null,DATABASE_VERSION);
+
+        mContext = context;
+    }
+
+    /**
+     * Called when the database is created for the first time. This is where the
+     * creation of tables and the initial population of the tables should happen.
+     *
+     * @param db The database.
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(COURSE_TABLE_CREATE);
+        Log.i(TAG,"Course table created.");
+    }
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+    /**
+     * Called when the database needs to be upgraded. The implementation
+     * should use this method to drop tables, add tables, or do anything else it
+     * needs to upgrade to the new schema version.
+     * <p/>
+     * <p>
+     * The SQLite ALTER TABLE documentation can be found
+     * <a href="http://sqlite.org/lang_altertable.html">here</a>. If you add new columns
+     * you can use ALTER TABLE to insert them into a live table. If you rename or remove columns
+     * you can use ALTER TABLE to rename the old table, then create the new table and then
+     * populate the new table with the contents of the old table.
+     * </p><p>
+     * This method executes within a transaction.  If an exception is thrown, all changes
+     * will automatically be rolled back.
+     * </p>
+     *
+     * @param db         The database.
+     * @param oldVersion The old database version.
+     * @param newVersion The new database version.
+     */
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // TODO make this better..
+
+        db.execSQL("DROP TABLE IF EXISTS ?", new Object[] {COURSE_TABLE_NAME});
     }
 }
