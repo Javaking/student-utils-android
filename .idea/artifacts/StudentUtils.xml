@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="apk" name="StudentUtils">
+    <output-path>$PROJECT_DIR$/build/classes/artifacts/StudentUtils</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="includeSystemProGuardCfgFile" value="true" />
+        <option name="keyAlias" value="javaking" />
+        <option name="keyPassword" value="c2FpbnQgZGFpbjEx&#13;&#10;" />
+        <option name="keyStorePassword" value="c2FpbnQgZGFpbjEx&#13;&#10;" />
+        <option name="keyStoreUrl" value="file://$USER_HOME$/Dropbox/mykeystore.keystore" />
+        <option name="proGuardCfgFileUrl" value="file://" />
+        <option name="signingMode" value="RELEASE_SIGNED" />
+      </options>
+    </properties>
+    <root id="archive" name="StudentUtils.apk">
+      <element id="android-final-package" facet="StudentUtils/android/Android" />
+    </root>
+  </artifact>
+</component>
