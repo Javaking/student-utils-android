@@ -19,7 +19,6 @@
     <string name="enableAds">Enable Ads</string>
     <string-array name="testDevices">
         <item >TEST_EMULATOR</item>
-        <item >DE71FB9BA74B5C149589555AF8FC4B8F</item>
     </string-array>
     <string name="admob_id">a150a7d955439fc</string>
     <string name="adSummary">Ads are the only way I make money from this app, please keep them on.</string>
