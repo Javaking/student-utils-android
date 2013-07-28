@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile files('../libraries/GoogleAdMobAdsSdk-6.4.1.jar')
+    compile project(':libraries:CalendarProvider')
+    compile project(':libraries:actionbarsherlock')
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "17.0.0"
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 16
+    }
+
+}
