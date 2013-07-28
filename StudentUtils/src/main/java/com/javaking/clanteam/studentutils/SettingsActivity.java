@@ -707,8 +707,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        getPreferenceScreen().setOrderingAsAdded(true);
-		addPreferencesFromResource(R.xml.pref_general);
+        addPreferencesFromResource(R.xml.pref_general);
 //		addPreferencesFromResource(R.xml.pref_courses);
 		addPreferencesFromResource(R.xml.pref_calendars);
 		
@@ -720,13 +719,15 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 			}
 		} catch (ClassCastException ignored) {}
 
-        Preference preference = new Preference(this);
-        preference.setTitle("Donate");
-        preference.setIntent(new Intent(this, DonateActivity.class));
-        getPreferenceScreen().addPreference(preference);
 	}
-	
-	private CharSequence[] getCalendarNames() {
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getPreferenceScreen().setOrderingAsAdded(true);
+    }
+
+    private CharSequence[] getCalendarNames() {
 		Cursor cursor = getContentResolver().query(Calendars.CONTENT_URI, new String[]{Calendars.NAME}, null, null, null);
 		String[] names = new String[cursor.getCount()];
 		int nameCol = cursor.getColumnIndex(Calendars.NAME);
@@ -753,6 +754,13 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	    super.onResume();
 	    getPreferenceScreen().getSharedPreferences()
 	            .registerOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().setOrderingAsAdded(true);
+
+        Preference preference = new Preference(this);
+        preference.setTitle("Donate");
+        preference.setIntent(new Intent(this, DonateActivity.class));
+
+        getPreferenceScreen().addPreference(preference);
 	}
 
 	@Override
