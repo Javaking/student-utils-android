@@ -682,12 +682,14 @@ package com.javaking.clanteam.studentutils;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.javaking.clanteam.calendar.provider.CalendarContract.Calendars;
@@ -705,6 +707,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        getPreferenceScreen().setOrderingAsAdded(true);
 		addPreferencesFromResource(R.xml.pref_general);
 //		addPreferencesFromResource(R.xml.pref_courses);
 		addPreferencesFromResource(R.xml.pref_calendars);
@@ -715,9 +718,12 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 				calChooser.setEntries(getCalendarNames());
 				calChooser.setEntryValues(getCalendarIds());
 			}
-		} catch (ClassCastException ignored) {
-			
-		}
+		} catch (ClassCastException ignored) {}
+
+        Preference preference = new Preference(this);
+        preference.setTitle("Donate");
+        preference.setIntent(new Intent(this, DonateActivity.class));
+        getPreferenceScreen().addPreference(preference);
 	}
 	
 	private CharSequence[] getCalendarNames() {

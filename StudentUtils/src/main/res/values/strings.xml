@@ -44,5 +44,8 @@
     <string name="addToCalTrue">Will automatically add all your courses to your calendar.</string>
     <string name="addToCalFalse">Won\'t add your courses to the calendar</string>
     <string name="noCourseText">There are no saved courses. Please click the \"Add Course\" button to add one.</string>
+    <string name="donateThanks">Thank you for wishing to donate to me! Every bit of money helps, and
+        hopefully I can put it to good use and keep making inprovements to my app.
+    </string>
 
 </resources>

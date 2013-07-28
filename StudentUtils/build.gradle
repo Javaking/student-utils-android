@@ -16,6 +16,7 @@ dependencies {
     compile files('../libraries/GoogleAdMobAdsSdk-6.4.1.jar')
     compile project(':libraries:CalendarProvider')
     compile project(':libraries:actionbarsherlock')
+    compile files('libs/PayPalAndroidSDK.jar')
 }
 
 android {

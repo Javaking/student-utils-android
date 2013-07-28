@@ -71,6 +71,7 @@
     <orderEntry type="module" module-name="CalendarProvider" exported="" />
     <orderEntry type="module" module-name="actionbarsherlock" exported="" />
     <orderEntry type="library" exported="" name="GoogleAdMobAdsSdk-6.4.1" level="project" />
+    <orderEntry type="library" exported="" name="PayPalAndroidSDK" level="project" />
   </component>
 </module>
 
