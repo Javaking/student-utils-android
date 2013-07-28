@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.javaking.clanteam.calendar"
+	android:versionCode="1"
+	android:versionName="1.0" >
+
+	<uses-sdk
+		android:minSdkVersion="4"
+		android:targetSdkVersion="16" />
+
+	<uses-permission android:name="android.permission.WRITE_CALENDAR" />
+	<uses-permission android:name="android.permission.READ_CALENDAR" />
+
+	<application android:allowBackup="true" >
+		<provider
+			android:name="com.javaking.clanteam.calendar.CalendarProvider"
+			android:authorities="com.javaking.clanteam.calendar"
+			android:enabled="true"
+			android:exported="true"
+			android:readPermission="android.permission.READ_CALENDAR"
+			android:writePermission="android.permission.WRITE_CALENDAR" >
+		</provider>
+	</application>
+
+</manifest>

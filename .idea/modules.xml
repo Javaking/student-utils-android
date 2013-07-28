@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/libraries/CalendarProvider/CalendarProvider.iml" filepath="$PROJECT_DIR$/libraries/CalendarProvider/CalendarProvider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StudentUtils/StudentUtils.iml" filepath="$PROJECT_DIR$/StudentUtils/StudentUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StudentUtilsProject.iml" filepath="$PROJECT_DIR$/StudentUtilsProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/actionbarsherlock/actionbarsherlock.iml" filepath="$PROJECT_DIR$/libraries/actionbarsherlock/actionbarsherlock.iml" />
+    </modules>
+  </component>
+</project>
+
