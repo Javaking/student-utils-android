@@ -678,19 +678,24 @@
 package com.javaking.clanteam.studentutils.courses;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
 /**
- * Created by Scott on 7/25/13.
+ * Created by Scott on 7/25/13. b
  */
 public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     private static CourseHelper instance;
 
     public static final String TAG = "CourseHelper";
+    
+    private SQLiteDatabase mDb;
+    private boolean mCanWrite = false;
 
     // Database info
     public static final int DATABASE_VERSION = 2;
@@ -718,11 +723,6 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     private Context mContext;
 
-    public static void initialize(Context context) {
-        instance = new CourseHelper(context);
-    }
-
-
     /**
      * Returns the instance of CourseHelper if it has been initialized
      * @return The instance of CourseHelper
@@ -733,6 +733,14 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
         if (instance==null) {
             // hasn't been initialized yet
             throw new InstantiationException("CourseHelper has not yet been initialized");
+        }
+        return instance;
+    }
+
+    public static CourseHelper getInstance(Context context) {
+        if (instance==null) {
+            // hasn't been initialized yet
+            instance = new CourseHelper(context);
         }
         return instance;
     }
@@ -778,12 +786,59 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO make this better..
+        // TODO make this better...
 
         db.execSQL("DROP TABLE IF EXISTS ?", new Object[] {COURSE_TABLE_NAME});
     }
 
     public void addCourse(CourseData courseData) {
+        if (courseData == null) throw new NullPointerException("courseData must not be null");
+        ensureWriteAccessOrFail();
 
+        if(findCourseByID(courseData)!=null) {
+            //todo finish this
+            // course already exists, do an update.
+        }
+    }
+
+    protected void ensureWriteAccessOrFail() {
+        if (!ensureWriteAccess()) throw new IllegalStateException("No writable database could be opened.");
+    }
+
+    protected boolean ensureWriteAccess() {
+        if (mCanWrite) return true;
+        try {
+            openDatabase();
+        } catch (SQLiteException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void openDatabase() {
+        // Try to get a writable database, but reading will have to do for
+        // some circumstances.
+        try {
+            mDb = getWritableDatabase();
+            mCanWrite = true;
+        } catch (SQLiteException e) {
+            mDb = getReadableDatabase();
+            mCanWrite = false;
+        }
+    }
+
+    /**
+     * Search the database for a source with an id matching that provided in the courseData
+     * @param courseData the course to look for
+     * @return returns the course with any updated data, or null
+     */
+    private CourseData findCourseByID(CourseData courseData) {
+        if (courseData.getID() == -1) {
+            return null;
+        }
+
+        Cursor cursor = mDb.query(COURSE_TABLE_NAME, new String[]{COLUMN_ID}, COLUMN_ID + "==?",
+                new String[]{String.valueOf(courseData.getID())}, null, null, null);
+        return (cursor.getCount() == 1) ? courseData : null;
     }
 }

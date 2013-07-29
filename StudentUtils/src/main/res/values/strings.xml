@@ -4,7 +4,7 @@
     <string name="app_name">Student Utilities</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_courses">Courses </string>
-    <string name="menu_addCourse">Add Course</string>
+    <string name="menu_newCourse">New Course</string>
     <string name="menu_add">Add</string>
     <string name="menu_deleteCourse">Remove Course</string>
     <string name="menu_delete">Delete</string>
@@ -47,5 +47,6 @@
     <string name="donateThanks">Thank you for wishing to donate to me! Every bit of money helps, and
         hopefully I can put it to good use and keep making inprovements to my app.
     </string>
+    <string name="menu_editCourseName">Edit Course</string>
 
 </resources>

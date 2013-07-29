@@ -87,13 +87,13 @@ public class CourseData {
             }
 
             public String format(DatePair pair) {
-                StringBuffer buffer = new StringBuffer();
-                buffer.append(mFirstFormat.format(pair.getStartDate()));
+                StringBuilder builder = new StringBuilder();
+                builder.append(mFirstFormat.format(pair.getStartDate()));
                 if (mInterlude!=null) {
-                    buffer.append(mInterlude);
+                    builder.append(mInterlude);
                 }
                 if (mSecondFormat!=null) {
-                    buffer.append(mSecondFormat.format(pair.getEndDate()));
+                    builder.append(mSecondFormat.format(pair.getEndDate()));
                 }
                 if (mEndFromat!=null) {
                     String endPattern = mEndFromat;
@@ -111,15 +111,16 @@ public class CourseData {
                     } else {
                         date = pair.getEndDate();
                     }
-                    buffer.append(format.format(date));
+                    builder.append(format.format(date));
                 }
-                return buffer.toString();
+                return builder.toString();
             }
 
             /**
              * Functions much like the parse function of DateFormat, but uses the pattern
-             * @param string
-             * @return
+             * @param string The string to parse for a DatePair
+             * @return the valid DatePair found in the string
+             * @throws ParseException if an error occured while parsing
              */
             public DatePair parse(String string) throws ParseException {
                 DatePair pair = new DatePair();
@@ -202,6 +203,11 @@ public class CourseData {
 
     }
 
+    public CourseData() {
+        // Todo what do we want here?
+
+        mID = -1;
+    }
 
     // TODO Do i want to expose this?
     public int getID() {
