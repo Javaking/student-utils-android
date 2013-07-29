@@ -209,7 +209,11 @@ public class CourseData {
         mID = -1;
     }
 
-    // TODO Do i want to expose this?
+    // Todo do I really want this exposed?
+    public void setID(int id) {
+        this.mID = id;
+    }
+
     public int getID() {
         return mID;
     }
@@ -238,6 +242,14 @@ public class CourseData {
         this.mRoom = room;
     }
 
+    public String getNotes() {
+        return mNotes;
+    }
+
+    public void setNotes(String notes) {
+        this.mNotes = notes;
+    }
+
     public DatePair[] getTimes() {
         return mTimes;
     }
@@ -250,6 +262,7 @@ public class CourseData {
     private String mTitle;
     private String mTeacher;
     private String mRoom;
+    private String mNotes;
     private DatePair[] mTimes;
     // todo Add assignment array
 
