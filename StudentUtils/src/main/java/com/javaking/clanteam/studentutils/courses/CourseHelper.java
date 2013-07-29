@@ -685,6 +685,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.javaking.clanteam.studentutils.courses.CourseData.DatePair;
+
+import java.text.ParseException;
+
 /**
  * Created by Scott on 7/25/13. b
  */
@@ -707,8 +711,8 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_TEACHER = "teacher";
     public static final String COLUMN_ROOM = "room";
-    public static final String COLUMN_TIMES = "times";
     public static final String COLUMN_NOTES = "notes";
+    public static final String COLUMN_TIMES = "times";
     public static final String COLUMN_ASSIGNMENT_IDS = "assignments";
 
     protected static final String COURSE_TABLE_CREATE = "CREATE TABLE "
@@ -717,9 +721,9 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
             + COLUMN_TITLE + " TEXT NOT NULL,"
             + COLUMN_TEACHER + " TEXT,"
             + COLUMN_ROOM + " TEXT,"
-            + COLUMN_TIMES + " TEXT,"
-            + COLUMN_ASSIGNMENT_IDS + " TEXT"
-            + COLUMN_NOTES + " TEXT);";
+            + COLUMN_NOTES + " TEXT,"
+            + COLUMN_TIMES + " TEXT NOT NULL,"
+            + COLUMN_ASSIGNMENT_IDS + " TEXT);"; // unused for now. Will be added later.
 
     private Context mContext;
 
@@ -830,15 +834,54 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
     /**
      * Search the database for a source with an id matching that provided in the courseData
      * @param courseData the course to look for
-     * @return returns the course with any updated data, or null
+     * @return returns the course with any updated data(a new instance), or null
      */
     private CourseData findCourseByID(CourseData courseData) {
         if (courseData.getID() == -1) {
+            // There's no id to search for..
             return null;
         }
-
+        
+        //select all rows that have the id coresponding to 
         Cursor cursor = mDb.query(COURSE_TABLE_NAME, new String[]{COLUMN_ID}, COLUMN_ID + "==?",
                 new String[]{String.valueOf(courseData.getID())}, null, null, null);
-        return (cursor.getCount() == 1) ? courseData : null;
+        return parseCursor(cursor)[0];
+    }
+
+    /**
+     * Parse all courses accessible through the provider cursor
+     * @param cursor cursor containing course data.
+     * @return An array of all valid courses accessible from the cursor. If the cursor is non-null,
+     * but contains no rows, a blank array will be returned
+     */
+    private CourseData[] parseCursor(Cursor cursor) {
+        if (cursor == null) return null;
+        CourseData[] courses = new CourseData[cursor.getCount()];
+
+        // starts before the first row.
+        while (cursor.moveToNext()) {
+            CourseData tmp = courses[cursor.getPosition()];
+            // All the column indices should be in the order we created them in.
+            // Checks should be unnecessary. If it becomes a problem, will change.
+            tmp.setID(cursor.getInt(0));
+            tmp.setTitle(cursor.getString(1));
+            tmp.setTeacher(cursor.getString(2));
+            tmp.setRoom(cursor.getString(3));
+            tmp.setNotes(cursor.getString(4));
+            String[] times = cursor.getString(5).split(";");
+            DatePair[] datePairs = new DatePair[times.length];
+            DatePair.PairFormat pairFormat = new DatePair.PairFormat();
+            for (int i = 0; i < times.length; i++) {
+                String time = times[i];
+                try {
+                    datePairs[i] = pairFormat.parse(time);
+                } catch (ParseException e) {
+                    Log.e(TAG, String.format("Failed to parse \"%s\"", time),e);
+                }
+            }
+            tmp.setTimes(datePairs);
+        }
+
+        return courses;
     }
 }
