@@ -677,6 +677,7 @@
 
 package com.javaking.clanteam.studentutils.courses;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -688,6 +689,7 @@ import android.util.Log;
 import com.javaking.clanteam.studentutils.courses.CourseData.DatePair;
 
 import java.text.ParseException;
+import java.util.StringTokenizer;
 
 /**
  * Created by Scott on 7/25/13. b
@@ -795,14 +797,22 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
         db.execSQL("DROP TABLE IF EXISTS ?", new Object[] {COURSE_TABLE_NAME});
     }
 
-    public void addCourse(CourseData courseData) {
+    public void addCourse(CourseData courseData) throws SQLiteException {
         if (courseData == null) throw new NullPointerException("courseData must not be null");
         ensureWriteAccessOrFail();
 
-        if(findCourseByID(courseData)!=null) {
-            //todo finish this
-            // course already exists, do an update.
-        }
+        // Add all data to a cv
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, courseData.getTitle());
+        cv.put(COLUMN_TEACHER, courseData.getTeacher());
+        cv.put(COLUMN_ROOM, courseData.getRoom());
+        cv.put(COLUMN_NOTES, courseData.getNotes());
+        cv.put(COLUMN_TIMES, courseData.getTimesAsString());
+        // cv.put(COLUMN_ASSIGNMENT_IDS,);
+
+        mDb.insertOrThrow(COURSE_TABLE_NAME,null,cv);
+
+        Log.i(TAG, String.format("Successfully added \"%s\" to the database!", courseData.getTitle()));
     }
 
     protected void ensureWriteAccessOrFail() {
@@ -833,22 +843,32 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     /**
      * Search the database for a source with an id matching that provided in the courseData
+     * Will assign all values in courseData to those found in the database. If none could be
+     * found, courseData will be left untouched and will return false
      * @param courseData the course to look for
-     * @return returns the course with any updated data, or null
      */
-    private CourseData findCourseByID(CourseData courseData) {
-        if (courseData.getID() == -1) {
+    private boolean findCourseByID(CourseData courseData) {
+        if (courseData == null) return false;
+        CourseData parsedCourse = findCourseByID(courseData.getID());
+
+        if (parsedCourse == null) return false;
+        CourseData.copy(parsedCourse, courseData);
+
+        return true;
+    }
+
+    private CourseData findCourseByID(int id) {
+        if (id == -1) {
             // There's no id to search for..
             return null;
         }
-        
-        //select all rows that have the id coresponding to 
+
+        //select all rows that have the id coresponding to
         Cursor cursor = mDb.query(COURSE_TABLE_NAME, new String[]{COLUMN_ID}, COLUMN_ID + "==?",
-                new String[]{String.valueOf(courseData.getID())}, null, null, null);
+                new String[]{String.valueOf(id)}, null, null, null);
         if (cursor.getCount() == 0) return null;
-        CourseData parsedCoure = parseCursor(cursor)[0]; //sqlite won't allow multiple entries with same id.
-        CourseData.copy(parsedCoure, courseData);
-        return courseData;
+        return parseCursor(cursor)[0]; //sqlite won't allow multiple entries with same id.
+
     }
 
     /**
