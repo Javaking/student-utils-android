@@ -266,5 +266,15 @@ public class CourseData {
     private DatePair[] mTimes;
     // todo Add assignment array
 
+    public static void copy(CourseData from, CourseData to) {
+        to.setTimes(from.getTimes());
+        to.setRoom(from.getRoom());
+        to.setTeacher(from.getTeacher());
+        to.setTitle(from.getTitle());
+        to.setID(from.getID());
+        to.setNotes(from.getNotes());
+    }
+
+
 
 }

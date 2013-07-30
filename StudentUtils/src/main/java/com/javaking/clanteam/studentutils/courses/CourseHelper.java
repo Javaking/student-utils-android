@@ -834,7 +834,7 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
     /**
      * Search the database for a source with an id matching that provided in the courseData
      * @param courseData the course to look for
-     * @return returns the course with any updated data(a new instance), or null
+     * @return returns the course with any updated data, or null
      */
     private CourseData findCourseByID(CourseData courseData) {
         if (courseData.getID() == -1) {
@@ -845,7 +845,10 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
         //select all rows that have the id coresponding to 
         Cursor cursor = mDb.query(COURSE_TABLE_NAME, new String[]{COLUMN_ID}, COLUMN_ID + "==?",
                 new String[]{String.valueOf(courseData.getID())}, null, null, null);
-        return parseCursor(cursor)[0];
+        if (cursor.getCount() == 0) return null;
+        CourseData parsedCoure = parseCursor(cursor)[0]; //sqlite won't allow multiple entries with same id.
+        CourseData.copy(parsedCoure, courseData);
+        return courseData;
     }
 
     /**
