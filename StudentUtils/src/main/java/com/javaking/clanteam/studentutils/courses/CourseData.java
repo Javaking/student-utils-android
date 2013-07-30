@@ -195,7 +195,8 @@ public class CourseData {
 
         @Override
         public String toString() {
-            new SimpleDateFormat().parse("",null);
+            //todo why was that here to begin with???
+//            new SimpleDateFormat().parse("",null);
             return mFormat.format(this);
 
         }
@@ -254,6 +255,15 @@ public class CourseData {
         return mTimes;
     }
 
+    public String getTimesAsString() {
+        StringBuilder builder = new StringBuilder();
+        for (DatePair pair : mTimes) {
+            builder.append(pair.toString());
+            builder.append(';');
+        }
+        return builder.toString();
+    }
+
     public void setTimes(DatePair[] times) {
         this.mTimes = times;
     }
@@ -267,6 +277,7 @@ public class CourseData {
     // todo Add assignment array
 
     public static void copy(CourseData from, CourseData to) {
+        if (from ==null || to == null) return;
         to.setTimes(from.getTimes());
         to.setRoom(from.getRoom());
         to.setTeacher(from.getTeacher());
