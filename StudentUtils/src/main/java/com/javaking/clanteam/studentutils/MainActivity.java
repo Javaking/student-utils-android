@@ -33,20 +33,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
         mPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
 
         // use tabs
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set up the ViewPager.
         mViewPager = (ViewPager) findViewById(R.id.mainPager);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                // select the proper tab
-                actionBar.setSelectedNavigationItem(position);
-            }
-
-        });
 
         // add all the tabs
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {

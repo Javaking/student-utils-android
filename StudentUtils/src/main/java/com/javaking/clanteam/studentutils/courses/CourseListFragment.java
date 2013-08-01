@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.javaking.clanteam.studentutils.R;
 
-/**
- * Created by Scott on 7/25/13.
- */
 public class CourseListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     static final String[] from = {null};
@@ -34,12 +34,14 @@ public class CourseListFragment extends SherlockListFragment implements LoaderMa
                 android.R.layout.simple_list_item_1, // todo make my own?
                 null, from, to, 0);
 
-        // start with a progress bar
-        setListShown(false);
-
         setHasOptionsMenu(true);
 
         setListAdapter(mAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_course_list,menu);
     }
 
     @Override
@@ -50,13 +52,6 @@ public class CourseListFragment extends SherlockListFragment implements LoaderMa
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mAdapter.swapCursor(cursor);
-
-        // the list should now be shown.
-        if (isResumed()) {
-            setListShown(true);
-        } else {
-            setListShownNoAnimation(true);
-        }
     }
 
     @Override
@@ -70,6 +65,17 @@ public class CourseListFragment extends SherlockListFragment implements LoaderMa
         super.onResume();
 
         // Reload the courses
-        getLoaderManager().restartLoader(0,null,this);
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addCourse:
+                break;
+            default: // will be optimized out, but for clarity...
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

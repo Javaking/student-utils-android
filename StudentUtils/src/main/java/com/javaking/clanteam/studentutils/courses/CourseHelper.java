@@ -12,7 +12,6 @@ import android.util.Log;
 import com.javaking.clanteam.studentutils.courses.CourseData.DatePair;
 
 import java.text.ParseException;
-import java.util.StringTokenizer;
 
 /**
  * Created by Scott on 7/25/13. b
@@ -214,7 +213,10 @@ public class CourseHelper extends SQLiteOpenHelper implements BaseColumns {
             tmp.setTeacher(cursor.getString(2));
             tmp.setRoom(cursor.getString(3));
             tmp.setNotes(cursor.getString(4));
-            String[] times = cursor.getString(5).split(";");
+            String string = cursor.getString(5);
+            if (string == null) continue;
+
+            String[] times = string.split(";");
             DatePair[] datePairs = new DatePair[times.length];
             DatePair.PairFormat pairFormat = new DatePair.PairFormat();
             for (int i = 0; i < times.length; i++) {
