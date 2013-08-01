@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.view.ViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    <android.support.v4.view.PagerTabStrip
+        android:id="@+id/pagerTabStrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
 
-    <FrameLayout
-            android:id="@+id/fragmentFrame"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp">
+        />
 
-    </FrameLayout>
+</android.support.v4.view.ViewPager>
 
-    <include
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/ad_banner"
-            android:layout_gravity="bottom"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+              <!--android:orientation="vertical"-->
+              <!--android:layout_width="match_parent"-->
+              <!--android:layout_height="match_parent">-->
+
+    <!--<FrameLayout-->
+            <!--android:id="@+id/fragmentFrame"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_marginLeft="0dp"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginTop="0dp">-->
+
+    <!--</FrameLayout>-->
+
+    <!--<include-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--layout="@layout/ad_banner"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_alignParentBottom="true"/>-->
+<!--</RelativeLayout>-->
